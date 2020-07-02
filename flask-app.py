@@ -1,14 +1,14 @@
 from flask import Flask, render_template, redirect, flash, request, url_for
 import os
 from matplotlib.pyplot import imread
-from fastai.vision import load_learner, open_image
+# from fastai.vision import load_learner, open_image
 
 ALLOWED_EXTENSIONS = set(['bmp', 'png', 'jpg', 'jpeg', 'gif'])
 app=Flask(__name__)
 app.secret_key = "secret key"
 path=os.path.abspath(os.curdir)
 
-learn = load_learner(path,'model/model.pkl')
+# learn = load_learner(path,'model/model.pkl')
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -33,7 +33,8 @@ def submit():
         file.save(img_path)
         print(img_path)
         img=open_image(img_path)
-        pred_class,_,pred_conf = learn.predict(img)
+        _,pred_idx,outputs = learn.predict(img)
+        pred_class = learn.data.train_ds.y.classes[pred_idx.data.numpy()]
         conf=pred_conf.max().numpy()
         output_string=f'{pred_class.__str__().title()} [ {conf*100:.4} % ]'
         return render_template('prediction.html',image=filename, prediction=output_string)
