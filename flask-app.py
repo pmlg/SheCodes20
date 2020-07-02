@@ -21,7 +21,7 @@ def index():
 def submit():
     print(request.url)
     if 'file' not in request.files:
-        flash('No file part')
+        flash('No file received')
         return redirect(request.url)
     file=request.files['file']
     if file.filename == '':
