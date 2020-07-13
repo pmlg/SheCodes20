@@ -1,14 +1,15 @@
 from flask import Flask, render_template, redirect, flash, request, url_for
+from flask_ngrok import run_with_ngrok
 import os
 from matplotlib.pyplot import imread
-# from fastai.vision import load_learner, open_image
+from fastai.vision import load_learner, open_image
 
 ALLOWED_EXTENSIONS = set(['bmp', 'png', 'jpg', 'jpeg', 'gif'])
 app=Flask(__name__)
 app.secret_key = "secret key"
 path=os.path.abspath(os.curdir)
 
-# learn = load_learner(path,'model/model.pkl')
+learn = load_learner(path,'model.pkl')
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
