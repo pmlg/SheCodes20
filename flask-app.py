@@ -7,6 +7,7 @@ from fastai.vision import load_learner, open_image
 ALLOWED_EXTENSIONS = set(['bmp', 'png', 'jpg', 'jpeg', 'gif'])
 app=Flask(__name__)
 app.secret_key = "secret key"
+run_with_ngrok(app)
 path=os.path.abspath(os.curdir)
 
 learn = load_learner(path,'model.pkl')
@@ -47,5 +48,6 @@ def submit():
     
 if __name__=='__main__':
     print('Server starting')
-    port = int(os.environ.get('PORT', 5000))
-    app.run(host='127.0.0.1', port=port)
+    # port = int(os.environ.get('PORT', 5000))
+    # app.run(host='127.0.0.1', port=port)
+    app.run()
