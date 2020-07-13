@@ -35,7 +35,7 @@ def submit():
         file.save(img_path)
         print(img_path)
         img=open_image(img_path)
-        _,pred_idx,outputs = learn.predict(img)
+        _,pred_idx,pred_conf = learn.predict(img)
         pred_class = learn.data.train_ds.y.classes[pred_idx.data.numpy()]
         conf=pred_conf.max().numpy()
         output_string=f'{pred_class.__str__().title()} [ {conf*100:.4} % ]'
